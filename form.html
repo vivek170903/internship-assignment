@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Form</title>
+</head>
+<body>
+    <h2>Myform</h2>
+
+    <form id="myForm" novalidate>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <p class="error" id="err_name"></p><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <p class="error" id="err_email"></p>
+
+        <label for="number">number:</label>
+        <input type="number" id="number" name="number" required><br><br>
+        <p class="error" id="err_number"></p>
+
+        <label for="password">password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <p class="error" id="err_password"></p>
+
+        <label for="confirmpassword">confirmpassword:</label>
+        <input type="password" id="confirmpassword" name="confirmpassword" required><br><br>
+        <p class="error" id="err_confirmpassword"></p>
+
+        <button type="submit">Submit</button>
+    </form>
+
+<script>
+
+    
+
+    let user = {};
+    const form = document.getElementById('myForm');
+form.addEventListener('submit', function(event){
+    event.preventDefault();
+
+        clearErrors();
+        
+        user = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        number: document.getElementById('number').value,
+        password: document.getElementById('password').value,
+        confirmpassword: document.getElementById('confirmpassword').value
+    };
+   
+
+    if(validateForm(user)) {
+        console.log("Form submitted successfully!");
+        console.log(user);
+    }
+});
+
+    function clearErrors() {
+    document.getElementById("err_name").innerText = "";
+    document.getElementById("err_email").innerText = "";
+    document.getElementById("err_number").innerText = "";
+    document.getElementById("err_password").innerText = "";
+    document.getElementById("err_confirmpassword").innerText = "";
+}
+
+
+    function validateForm(user) {
+
+            if (user.name == "") {
+                document.getElementById("err_name").innerText = "please enter your name.";
+                return false;
+            }
+                if (user.email == "") {
+                document.getElementById("err_email").innerText = "please enter your email.";
+                return false;
+                }
+                if (user.number == "") {
+                document.getElementById("err_number").innerText = "please enter your number.";
+                return false;
+                }
+                if (user.password == "") {
+                document.getElementById("err_password").innerText = "please enter your password.";
+                return false;
+                }
+                if (user.confirmpassword == "") {
+                document.getElementById("err_confirmpassword").innerText = "please confirm your password.";
+                return false;
+    }
+
+
+            if (user.number.length !== 10) {
+                document.getElementById("err_number").innerText = "Number must be 10 digits.";
+                return false;
+            }
+
+            const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!regex.test(user.email)) {
+            document.getElementById("err_email").innerText = "Invalid email format.";
+            return false;
+            }
+
+            if (user.password !== user.confirmpassword) {
+                document.getElementById("err_confirmpassword").innerText = "Passwords do not match.";
+                return false;
+            }
+
+            if (user.password.length < 6) {
+                document.getElementById("err_password").innerText = "Password must be at least 6 characters long.";
+                return false;
+            }
+
+            return true;
+        };
+
+    
+
+
+</script>    
+</body>
+</html>
